@@ -1,6 +1,7 @@
 import React from "react";
 import "./Blog.css";
 // import Indicator from "../../Assets/Image/indicator.svg";
+import Indicator from "../../Assets/Image/indicator.svg.svg";
 import { useNavigate } from "react-router-dom";
 
 const Blog = ({ blog }) => {
@@ -15,7 +16,7 @@ const Blog = ({ blog }) => {
                 <div>
                     <h1>{title}</h1>
                     <div className='author-name'>
-                        {/* <img src={Indicator} alt='' /> */}
+                        <img src={Indicator} alt='' />
                         <p>{admin}</p>
                     </div>
                 </div>
