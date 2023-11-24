@@ -3,10 +3,20 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './Components/Home/Home';
 import NotFound from './Components/NotFound/NotFound';
+import Videos from "./Components/Videos/Video";
+import Login from "./Components/Login/Login";
+import Navbar from "./Components/Navbar/Navbar";
+import BlogDetails from "./Components/BlogDetails/BlogDetails";
+import { createContext, useState } from "react";
+
+export const BlogContext = createContext();
 
 function App() {
+  const [blogs, setBlogs] = useState([]);
+
   return (
-    <div className="App">
+
+    <BlogContext.Provider value={[blogs, setBlogs]} className="App">
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -23,13 +33,17 @@ function App() {
       </header> */}
 
 
+      <Navbar></Navbar>
       <Routes>
 
         <Route path='/' element={<Home></Home>}></Route>
+        <Route path='/videos' element={<Videos />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/blog/:id' element={<BlogDetails />} />
         <Route path='*' element={<NotFound></NotFound>}></Route>
       </Routes>
 
-    </div>
+    </BlogContext.Provider>
   );
 }
 
