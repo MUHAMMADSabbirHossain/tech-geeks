@@ -8,6 +8,7 @@ import Login from "./Components/Login/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import BlogDetails from "./Components/BlogDetails/BlogDetails";
 import { createContext, useState } from "react";
+import Signup from './Components/Signup/Signup';
 
 export const BlogContext = createContext();
 
@@ -39,6 +40,7 @@ function App() {
         <Route path='/' element={<Home></Home>}></Route>
         <Route path='/videos' element={<Videos />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
         <Route path='/blog/:id' element={<BlogDetails />} />
         <Route path='*' element={<NotFound></NotFound>}></Route>
       </Routes>
