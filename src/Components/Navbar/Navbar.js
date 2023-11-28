@@ -10,7 +10,7 @@ import { auth } from "../../Firebase/firebase.init";
 const Navbar = () => {
     const { pathname } = useLocation();
     const [user, setUser] = useState({});
-    console.log(user);
+    // console.log(user);
 
     useEffect(() => {
         const auth = getAuth();

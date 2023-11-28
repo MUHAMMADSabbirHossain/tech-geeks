@@ -82,6 +82,7 @@ const Login = () => {
         <div className='auth-form-container '>
             <div className='auth-form'>
                 <h1>Login</h1>
+
                 <form onSubmit={handleLogin}>
                     <div className='input-field'>
                         <label htmlFor='email'>Email</label>
@@ -114,6 +115,7 @@ const Login = () => {
                         Login
                     </button>
                 </form>
+
                 <p className='redirect'>
                     New to Tech Geeks?{" "}
                     <span onClick={() => navigate("/signup")}>Create New Account</span>
