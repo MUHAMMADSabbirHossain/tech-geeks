@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleLogo from "../../Assets/Image/google.svg";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import auth from "../../Firebase/firebase.init";
+import { eventWrapper } from "@testing-library/user-event/dist/utils";
 
 const Signup = () => {
     const navigate = useNavigate();
+    const [email, setEmail] = useState({ value: "", error: "" });
+    const [password, setPassword] = useState({ value: "", error: "" });
+    const [confirmPassword, setConfirmPassword] = useState({ value: "", error: "" });
+    console.log(email, password, confirmPassword);
 
     const provider = new GoogleAuthProvider();
 
@@ -21,6 +26,22 @@ const Signup = () => {
                 // Handle Errors here.
                 console.error(error);
             });
+    };
+
+    const handleEmail = emailInput => {
+        if (/\S+@\S+\.\S+/.test(emailInput)) {
+            setEmail({ value: emailInput, error: "" });
+        } else {
+            setEmail({ value: "", error: "Invalid email" });
+        };
+    };
+
+    const handlePassword = passwordInput => {
+        setPassword(passwordInput);
+    };
+
+    const handleConfirmPassword = confirmPassword => {
+        setConfirmPassword(confirmPassword);
     };
 
     const handleSignup = (event) => {
@@ -53,13 +74,16 @@ const Signup = () => {
                     <div className='input-field'>
                         <label htmlFor='email'>Email</label>
                         <div className='input-wrapper'>
-                            <input type='email' name='email' id='email' />
+                            <input type='email' name='email' id='email' onBlur={(event) => handleEmail(event.target.value)} />
                         </div>
+                        {
+                            email?.error && <p>{email.error}</p>
+                        }
                     </div>
                     <div className='input-field'>
                         <label htmlFor='password'>Password</label>
                         <div className='input-wrapper'>
-                            <input type='password' name='password' id='password' />
+                            <input type='password' name='password' id='password' onBlur={(event => handlePassword(event.target.value))} />
                         </div>
                     </div>
                     <div className='input-field'>
@@ -69,6 +93,7 @@ const Signup = () => {
                                 type='password'
                                 name='confirmPassword'
                                 id='confirm-password'
+                                onBlur={(event) => handleConfirmPassword(event.target.value)}
                             />
                         </div>
                     </div>
