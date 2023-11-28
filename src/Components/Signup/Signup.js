@@ -37,33 +37,54 @@ const Signup = () => {
     };
 
     const handlePassword = passwordInput => {
-        setPassword(passwordInput);
+        if (passwordInput.length < 7) {
+            setPassword({ value: "", error: "Password is too short" });
+        }
+        else {
+            setPassword({ value: passwordInput, error: "" });
+        }
+        // setPassword(passwordInput);
     };
 
-    const handleConfirmPassword = confirmPassword => {
-        setConfirmPassword(confirmPassword);
+    const handleConfirmPassword = confirmPasswordInput => {
+        if (confirmPasswordInput === password.value) {
+            setConfirmPassword({ value: confirmPasswordInput, error: "" });
+        }
+        else {
+            setConfirmPassword({ value: "", error: "Password Mismatched" });
+        }
+        // setConfirmPassword(confirmPassword);
     };
 
     const handleSignup = (event) => {
         event.preventDefault();
-        const email = event.target.email.value;
-        const password = event.target.password.value;
+        // const email = event.target.email.value;
+        // const password = event.target.password.value;
         console.log("Signup", email, password);
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                // ...
-                console.log(user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // ..
-                console.log(errorMessage);
-            });
-    }
+        if (email.value === "") {
+            setEmail({ value: "", error: "Email is required" });
+        }
+        if (password.value === "") {
+            setPassword({ value: "", error: "Password is required" });
+        }
+
+        if (email.value && password.value && confirmPassword.value === password.value) {
+            createUserWithEmailAndPassword(auth, email.value, password.value)
+                .then((userCredential) => {
+                    // Signed up 
+                    const user = userCredential.user;
+                    // ...
+                    console.log(user);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                    console.log(errorMessage);
+                });
+        };
+    };
 
     return (
         <div className='auth-form-container '>
@@ -77,7 +98,7 @@ const Signup = () => {
                             <input type='email' name='email' id='email' onBlur={(event) => handleEmail(event.target.value)} />
                         </div>
                         {
-                            email?.error && <p>{email.error}</p>
+                            email?.error && <p className="error">{email.error}</p>
                         }
                     </div>
                     <div className='input-field'>
@@ -85,6 +106,9 @@ const Signup = () => {
                         <div className='input-wrapper'>
                             <input type='password' name='password' id='password' onBlur={(event => handlePassword(event.target.value))} />
                         </div>
+                        {
+                            password.error && <p className="error">{password.error}</p>
+                        }
                     </div>
                     <div className='input-field'>
                         <label htmlFor='confirm-password'>Confirm Password</label>
@@ -96,6 +120,11 @@ const Signup = () => {
                                 onBlur={(event) => handleConfirmPassword(event.target.value)}
                             />
                         </div>
+                        {
+                            confirmPassword.error && (
+                                <p className="error">{confirmPassword.error}</p>
+                            )
+                        }
                     </div>
                     <button type='submit' className='auth-form-submit'>
                         Sign Up
