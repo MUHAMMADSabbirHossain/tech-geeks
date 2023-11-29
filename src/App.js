@@ -9,6 +9,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import BlogDetails from "./Components/BlogDetails/BlogDetails";
 import { createContext, useState } from "react";
 import Signup from './Components/Signup/Signup';
+import { Toaster } from 'react-hot-toast';
 
 export const BlogContext = createContext();
 
@@ -35,6 +36,7 @@ function App() {
 
 
       <Navbar></Navbar>
+      <Toaster></Toaster>
       <Routes>
 
         <Route path='/' element={<Home></Home>}></Route>

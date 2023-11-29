@@ -4,6 +4,7 @@ import GoogleLogo from "../../Assets/Image/google.svg";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import auth from "../../Firebase/firebase.init";
 import { eventWrapper } from "@testing-library/user-event/dist/utils";
+import toast from "react-hot-toast";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -76,12 +77,20 @@ const Signup = () => {
                     const user = userCredential.user;
                     // ...
                     console.log(user);
+                    toast.success("User Created", { id: "error" });
+                    navigate("/");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     // ..
-                    console.log(errorMessage);
+                    // console.log(errorMessage);
+                    if (errorMessage.includes("email-already-in-use")) {
+                        toast.error("Already Exist", { id: "" });
+                    }
+                    else {
+                        toast.error(errorMessage, { id: "error" });
+                    }
                 });
         };
     };
